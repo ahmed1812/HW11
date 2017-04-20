@@ -1,0 +1,169 @@
+app
+This is the core directory of your entire app and most of the application-specific code will go into this directory. As you may know, Rails is an MVC framework, which means the application is separated into parts per its purpose in the Model, View, or Controller. These three sections goes inside this directory.
+
+app/assets
+This contains the static files required for the application’s front-end grouped into folders based on their type. The javascript files and stylesheets (CSS) in these folders should be application specific since the external library files would go into another directory (vendor) which we will look at in a bit.
+
+app/assets/images
+All the images required for the application should go into this directory. The images here are available in views through nifty helpers like image_tag("img_name.png") so that you don’t have to specify the relative or absolute path for images.
+
+app/assets/javascripts
+The javascript files go here. There is a convention to create the JS files for each controller. For example, for books_controller.rb, the JS functions for this controller’s views would be books.js.
+
+app/assets/javascripts/application.js
+The pre-created application.js is a manifest for the entire application’s javascript requirements. Rails uses the asset pipeline for compiling and serving up assets. This means the application.js is the file where you reference the application specific JS files, which are unified and minified before sending it to the views.
+
+Try as much as possible to not create javascript functions in this file.
+
+app/assets/stylesheets
+Similar to /javascripts, the CSS files go here. The naming convention is also the same as the javascript assets.
+
+app/assets/stylesheets/application.css
+This file is a manifest for the stylesheets in the application. Similar to application.js, the referenced files are served up as a single stylesheet to the view.
+
+app/controllers
+This is where all the controller files go. Controllers are responsible for orchestrating the model and views. The naming convention for the file is the pluralized model name + “_controller”. For example, the controller for the Book model is books_controller.rb, which is called “snake case”. Also, the controller class will be CamelCase which is BooksController.
+
+The script to generate a controller is:
+
+rails generate controller controller_name action1 action2
+app/controllers/application_controller.rb
+This is the main controller from which all other controllers inherit. The methods on ApplicationController are available to other controllers as well. This controller inherits from the ActionController::Base module, which has set of methods to work with in controllers.
+
+app/controllers/concerns
+Concerns are modules that can be used across controllers. This is helpful to DRY up your code by implementing reusable functionality inside the directory. The naming convention is module_name.rb.
+
+app/helpers
+This is where all the helper functions for views reside. There are already a few pre-created helpers available, like the one we reference above (image_tag) for referring to images in views. You can create your own functions in a controller specific helper file, which will be automatically created when you use Rails generators to create the controller. The naming convention is controller_name_helper.rb.
+
+app/helpers/application_helper.rb
+This is the root helper. Similar to application_controller.rb, functions written here will be available in all the helpers, by default, and in all the views.
+
+app/mailers
+The mailers directory contains the mail (as in “email”) specific functions for the application. Mailers are similar to controllers and they will have their view files in app/views/mailer_name/. To generate a mailer you can run the following command
+
+rails generate mailer MailerName
+The first time you generate a mailer, application_mailer.rb is automatically created for you. This will inherit from the ActionMailer::Base and sets the default from address as well as the layout for your mailer views. Subsequent mailers will inherit from ApplicationMailer.
+
+The naming convention is similar to controllers: modelname_mailer.rb. You can read more about mailers here.
+
+app/models
+All model files live in the app/models directory. Models act as object-relational mappers to the database tables that hold the data. The naming convention is simply modelname.rb. The model name is, by convention, the singular form of the underlying table that represents the model in the database. So, the Book model will be mapped on top of the books table in the database. You can learn more about Rails models in here.
+
+app/models/concerns
+Model concerns are similar to Controller concerns, containing methods that might be used in multiple model files. This greatly helps with organizing the code.
+
+app/views
+The third part of the MVC architecture are the views. The files related to the views go into this directory. The files are a combination of HTML and Ruby (called Embedded Ruby or Erb) and are organized based on the controller to which they correspond. There is a view file for each controller action. For example, the BooksController#index action would have it’s corresponding view as
+
+app/views/books/index.html.erb
+This is another of Rails’ conventions, and can be broken. In other words, you can explicitly render any view manually.
+
+app/views/layouts
+This folder holds the layout for all your view files, which they inherit. Files created in here are available across all the view files.
+
+You can create multiple layouts scoped to parts of application. For example, if we want to create a separate layout for administrative views vs user views, we can achieve it by creating a layout filed named after the controller name. For all AdminController views, create a layout file called admin.html.erb which will then act as the layout for the admin views, as well as any controller that inherits from AdminController.
+
+You can also create partial views here that might be used across controllers.
+
+app/views/layouts/application.html.erb
+This will be default file created automatically, which will act as the layout for actions in ApplicationController and any other contoller that inherits from ApplicationController.
+
+bin
+This directory contains Binstubs for the Rails application. Binstubs are nothing but wrappers to run the gem executables scoped to your application. This can be used in place of bundle exec <command>. The default available Binstubs are bundle, rails, rake, setup, and spring. Any of these binstubs can be executed by:
+
+bin/<executable>
+config
+As the name suggests this contains all the application’s configuration files. The database connection and application behavior can be altered by the files inside this directory.
+
+config/application.rb
+This contains the main configuration for the application, such as the timezone to use, language, and many other settings. The full list could be found here. Also, note the configurations specified here is for all environments (development, test, and production). Environment specific configurations will go into other files, which we’ll see below.
+
+config/boot.rb
+boot.rb, as you might imagine, “boots” up the Rails application. Rails apps keep gem dependencies in a file called Gemfile in the root of the project. The Gemfile contains all the dependencies required for the application to run. boot.rb verifies that there is actually a Gemfile present and will store the path to this file in an environment variable called BUNDLE_GEMFILE for later use. boot.rb also requires 'bundler/setup' which will fetch and build the gems mentioned in the Gemfile using Bundler.
+
+config/database.yml
+This file holds all the database configuration the application needs. Here, different configurations can be set for different environments.
+
+config/environment.rb
+This file requires application.rb to initialize the Rails application.
+
+config/routes.rb
+This is where all the routes of the application are defined. There are different semantics for declaring the routes, examples of which can be found in this file.
+
+config/secrets.yml
+Newly added in Rails 4.1, this gives you a place to store application secrets. The secrets defined here are available throughout the application using Rails.application.secrets.<secret_name>. You can read more about secrets.yml from the release notes.
+
+config/environments
+As I mentioned above, this folder contains the environment-specific configuration files for the development, test, and production environments. Configurations in application.rb are available in all environments, whereas you can separate out different configurations for the different environments by adding settings to the environment named files inside this directory. Default environment files available are, development.rb, production.rb, test.rb, but you can add others, if needed.
+
+config/initializers
+This directory contains the list of files that need to be run during the Rails initialization process. Any *.rb file you create here will run during the initialization automatically. For example, constants that you declare in here will then be available throughout your app. The initializer file is triggered from the call in config/environment.rb to Rails.application.initialize!.
+
+There are core initializers, which I’ll cover here, but you can add any Ruby file you like. In fact, many Rails gems require an initializer to complete the setup of that gem for your Rails app.
+
+config/initializers/assets.rb
+This contains configuration for the asset pipeline. It will have only one default configuration already defined, Rails.application.config.assets.version, which is the version for your assets bundle. You can also specify configurations such as adding additional assets path or other items to precompile.
+
+config/initializers/backtrace_silencers.rb
+You can add backtrace_silencers and filters that might be applicable for your app here. Backtrace filters are nothing but filters that helps to refine the stacktrace when an error occurs. Silencers, on the other hand, let’s you silence all the stacktraces from specified gems.
+
+config/initializers/cookie_serializer.rb
+There is not a whole lot of configuration happening here. It contains specifications for the app’s cookie serialization. You can read more about cookie handling in Rails from here.
+
+config/initializers/filter_parameter_logging.rb
+You can add parameters here that might contain sensitive information and that you don’t want to display in your logs. By default, the “password” parameter will be filtered.
+
+config/initializers/inflections.rb
+You can add/override the inflections (singularizations and pluralizations) for any language in here. You can learn more about the inflections API here.
+
+config/initializers/mime_type.rb
+Add MIME (Multi-purpose Internet Mail Extensions) configurations for your application here to handle different types of files you may want to use. The list of options available in Mime API can be found here.
+
+config/initializers/session_store.rb
+This file contains the underlying session store to use in your app to store sessions. The default is :cookie_store, meaning sessions are stored in browser cookies, but you can change it to one of four options. The options and more about the session store are available here.
+
+config/initializers/wrap_parameters.rb
+As the name implies, it contains settings for wrapping your parameters. By default, all the parameters are wrapped into a nested hash so that it’s available without a root. You can override this or add your custom settings here.
+
+config/locales
+This has the list of YAML file for each language that holds the keys and values to translate bits of the app. You can learn about internationalization (i18n) and the settings from here.
+
+db
+All the database related files go inside this folder. The configuration, schema, and migration files can be found here, along with any seed files.
+
+db/seeds.rb
+This file is used to prefill, or “seed”, database with required records. You can use normal ActiveRecord methods for record insertion.
+
+Gemfile
+The Gemfile is the place where all your app’s gem dependencies are declared. This file is mandatory, as it includes the Rails core gems, among other gems. You can learn all about Bundler and Gemfiles at the Bundler web site.
+
+Gemfile.lock
+Gemfile.lock holds the gem dependency tree, including all versions, for the app. This file is generated by bundle install on the above Gemfile. It, in effect, locks your app dependencies to specific versions.
+
+lib
+lib directory is where all the application specific libraries goes. Application specific libraries are re-usable generic code extracted from the application. Think of it as an application specific gem.
+
+lib/assets
+This file holds all the library assets, meaning those items (scripts, stylesheets, images) that are not application specific.
+
+lib/tasks
+The application’s Rake tasks and other tasks can be put in this directory. Rake tasks mentioned here are required by the app’s Rakefile, which we’ll see below.
+
+log
+This holds all the log files. Rails automatically creates files for each environment.
+
+public
+The public directory contains some of the common files for web applications. By default, HTML templates for HTTP errors, such as 404, 422 and 500, are generated along with a favicon and a robots.txt file. Files that are inside this directory are available in https://appname.com/filename directly.
+
+Rakefile
+Just above, I mentioned that Rake files created inside the lib/tasks are available throughout the app via the Rake module. This is possible because of the Rakefile, which requires application.rb and invokes Rails.application.load_tasks. The call to load_tasks loads all the *.rake files from lib/tasks folder.
+
+test
+The folder name says it all. This holds all the test files for the app. A subdirectory is created for each component’s test files.
+
+tmp
+This is the temporary directory for the app to hold files like caches. You don’t need to worry about this directory, since it’s fully managed by Rails itself. But there are few commands available if you want to take control of the directory, which can be found here
+
+vendor/assets
+This is where the vendor files go, such as javascript libraries and CSS files, among others. Files added here will become part of the asset pipeline automatically.
