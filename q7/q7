@@ -1,0 +1,20 @@
+Q7
+a = [1,2,3,4,5,6]
+b = ["red","green","blu","wite","black"]
+
+a.zip(b)
+
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+var a = [1,2,3,4,5];
+var b = ["red","green","blu","wite","black"];
+
+function getArray(table1, table2)
+{
+    var i, out = [];//literal new array
+    for(i=0;i<table1.length;i++)
+    {
+        out.push([table1[i],table2[i]]);
+    }
+    return out;
+}
+getArray(a, b);
