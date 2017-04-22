@@ -1,6 +1,18 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="https://hw11-ahmed007.c9users.io/people">people</a></li>
+  <li role="presentation"><a href="https://hw11-ahmed007.c9users.io/vehicles">vehicles</a></li>
+  
+</ul>
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
 <h1>Editing Vehicle</h1>
 
-<%= render 'form' %>
+<%= render 'form'  %>
 
-<%= link_to 'Show', @vehicle %> |
-<%= link_to 'Back', vehicles_path %>
+<%= link_to 'Show', @vehicle , class:"btn btn-success" %> |
+<%= link_to 'Back', vehicles_path , class:"btn btn-success" %>
+</div>
+  <div class="col-md-4"></div>
+</div>

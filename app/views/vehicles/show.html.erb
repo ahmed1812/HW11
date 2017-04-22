@@ -1,3 +1,12 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="https://hw11-ahmed007.c9users.io/people">people</a></li>
+  <li role="presentation"><a href="https://hw11-ahmed007.c9users.io/vehicles">vehicles</a></li>
+  
+</ul>
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -30,5 +39,9 @@
   <%= @vehicle.license_plate %>
 </p>
 
-<%= link_to 'Edit', edit_vehicle_path(@vehicle) %> |
-<%= link_to 'Back', vehicles_path %>
+<%= link_to 'Edit', edit_vehicle_path(@vehicle) , class:"btn btn-primary btn-lg active" %> |
+<%= link_to 'Back', vehicles_path , class:"btn btn-primary btn-lg active" %>
+
+</div>
+  <div class="col-md-4"></div>
+</div>

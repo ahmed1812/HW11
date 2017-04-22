@@ -1,8 +1,17 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" ><a href="https://hw11-ahmed007.c9users.io/people">people</a></li>
+  <li role="presentation"><a href="https://hw11-ahmed007.c9users.io/vehicles">vehicles</a></li>
+  
+</ul>
+
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
 <p id="notice"><%= notice %></p>
 
 <h1>Listing Vehicles</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Vin</th>
@@ -24,9 +33,9 @@
         <td><%= vehicle.model %></td>
         <td><%= vehicle.engine_type %></td>
         <td><%= vehicle.license_plate %></td>
-        <td><%= link_to 'Show', vehicle %></td>
-        <td><%= link_to 'Edit', edit_vehicle_path(vehicle) %></td>
-        <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', vehicle , class:"btn btn-info" %></td>
+        <td><%= link_to 'Edit', edit_vehicle_path(vehicle) , class:"btn btn-warning"%></td>
+        <td><%= link_to 'Destroy', vehicle, method: :delete, data: { confirm: 'Are you sure?' } ,class:"btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +43,7 @@
 
 <br>
 
-<%= link_to 'New Vehicle', new_vehicle_path %>
+<%= link_to 'New Vehicle', new_vehicle_path, class:"btn btn-default" %>
+</div>
+  <div class="col-md-2"></div>
+</div>
